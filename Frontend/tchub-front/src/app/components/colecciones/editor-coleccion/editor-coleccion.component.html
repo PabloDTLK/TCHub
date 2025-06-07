@@ -1,0 +1,101 @@
+<div class="editor-container">
+    <header class="page-header">
+        <h1>{{ pageTitle }}</h1>
+        <div>
+            <button type="button" class="btn btn-secondary" (click)="cancelar()" [disabled]="isSaving">Cancelar</button>
+        </div>
+    </header>
+
+    <div *ngIf="isLoading" class="loading-indicator">
+        <p>Cargando datos de la colección...</p>
+    </div>
+
+    <form #coleccionForm="ngForm" (ngSubmit)="onSubmitForm(coleccionForm)" *ngIf="!isLoading">
+        <div class="form-section metadata-section">
+            <h2>Detalles de la Colección</h2>
+            <div class="form-group">
+                <label for="nombreColeccion">Nombre:</label>
+                <input type="text" id="nombreColeccion" name="nombre" class="form-control"
+                    [(ngModel)]="coleccion.nombre" required minlength="3" #nombreField="ngModel"
+                    [ngClass]="{ 'is-invalid': (coleccionForm.submitted || nombreField.touched) && nombreField.invalid }" />
+                <div *ngIf="(coleccionForm.submitted || nombreField.touched) && nombreField.invalid"
+                    class="invalid-feedback">
+                    <div *ngIf="nombreField.errors?.['required']">El nombre es obligatorio.</div>
+                    <div *ngIf="nombreField.errors?.['minlength']">El nombre debe tener al menos 3 caracteres.</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="descripcionColeccion">Descripción:</label>
+                <textarea id="descripcionColeccion" name="descripcion" class="form-control" rows="3"
+                    [(ngModel)]="coleccion.descripcion" #descripcionField="ngModel"></textarea>
+            </div>
+        </div>
+
+        <hr class="section-divider">
+
+        <div class="form-section catalogo-section">
+            <h2>Añadir Cartas a la Colección</h2>
+            <p class="instrucciones">Haz clic en una carta del catálogo para añadirla o editar su cantidad.</p>
+            <app-catalogo
+                (cartaClickeada)="manejarCartaClickeadaDelCatalogo($event)"
+                [modoSeleccionParaEditor]="true"
+            ></app-catalogo>
+        </div>
+
+        <hr class="section-divider">
+
+        <div class="form-section seleccion-section">
+            <h2>Cartas en esta Colección ({{ cartasSeleccionadas.length }})</h2>
+            <div *ngIf="cartasSeleccionadas.length === 0" class="no-cartas-seleccionadas">
+                <p>Aún no has añadido ninguna carta a esta colección. Usa el catálogo de arriba.</p>
+            </div>
+
+            <div *ngIf="cartasSeleccionadas.length > 0" class="cartas-seleccionadas-grid">
+                <div *ngFor="let carta of cartasSeleccionadas; let i = index" class="carta-seleccionada-item">
+                    <img [src]="carta.imagenCarta || 'assets/images/placeholder-carta.png'" [alt]="carta.nombreCarta"
+                        class="seleccion-imagen-carta">
+                    <div class="seleccion-detalles-carta">
+                        <h4 class="seleccion-nombre-carta">{{ carta.nombreCarta || 'Nombre no disponible' }}</h4>
+
+                        <div class="cantidad-control">
+                            <label for="cantidad-{{i}}">Cantidad:</label>
+                            <input type="number" id="cantidad-{{i}}" name="cantidad-{{i}}-{{carta.varianteUniversalId}}"
+                                [ngModel]="carta.cantidad"
+                                (ngModelChange)="actualizarCantidad(carta.varianteUniversalId, $event)" min="0"
+                                class="form-control form-control-sm cantidad-input" />
+                            <button type="button" (click)="eliminarCartaDeSeleccion(carta.varianteUniversalId)"
+                                class="btn btn-danger btn-icon btn-sm" aria-label="Eliminar carta">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 0 24 24" width="16px"
+                                    fill="currentColor">
+                                    <path d="M0 0h24v24H0V0z" fill="none" />
+                                    <path
+                                        d="M16 9v10H8V9h8m-1.5-6h-5l-1 1H5v2h14V4h-3.5l-1-1zM18 7H6v12c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="error" class="alert alert-danger error-message global-error">
+            {{ error }}
+        </div>
+
+        <div class="form-actions">
+
+            <button type="submit" class="btn btn-primary" [disabled]="isSaving || isLoading || !coleccionForm.valid">
+                <!-- Accede a coleccionForm.valid -->
+                <span *ngIf="isSaving" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                {{ isSaving ? 'Guardando...' : (isEditMode ? 'Actualizar Colección' : 'Crear Colección') }}
+            </button>
+        </div>
+    </form>
+
+    <!-- Modal -->
+    <app-seleccionar-variante-modal *ngIf="showVarianteModal && varianteParaModal"
+        [multiversalId]="varianteParaModal.multiversalId" [nombreBaseCarta]="varianteParaModal.nombreBaseCarta"
+        (cerrarModal)="handleModalCerradoConSeleccion($event)">
+    </app-seleccionar-variante-modal>
+</div>

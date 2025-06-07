@@ -1,0 +1,153 @@
+.catalogo-container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.catalogo-title {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+    font-size: 2.5em;
+}
+
+.search-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+    gap: 10px;
+    align-items: stretch;
+}
+
+.search-input {
+    padding: 10px 15px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    flex-grow: 1;
+    max-width: 400px;
+    box-sizing: border-box;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #FF6600;
+    box-shadow: 0 0 0 2px rgba(255, 102, 0, 0.2);
+}
+
+.search-button {
+    padding: 10px 20px;
+    font-size: 1em;
+    border: none;
+    background-color: #FF6600;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    white-space: nowrap;
+}
+
+.search-button:hover:not(:disabled) {
+    background-color: #E65C00;
+}
+
+.search-button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.loading-indicator,
+.error-message,
+.no-items-message {
+    text-align: center;
+    padding: 40px 20px;
+    font-size: 1.2em;
+    color: #555;
+}
+
+.loading-indicator-inline {
+    text-align: center;
+    padding: 10px 0;
+    font-size: 1em;
+    color: #777;
+}
+
+.error-message {
+    color: #D8000C;
+    background-color: #FFD2D2;
+    border: 1px solid #D8000C;
+    border-radius: 8px;
+}
+
+.no-items-message {
+    background-color: #f9f9f9;
+    border: 1px solid #eee;
+    border-radius: 8px;
+}
+
+.pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    gap: 20px;
+}
+
+.current-page-info {
+    font-size: 1.1em;
+    color: #555;
+    font-weight: bold;
+}
+
+.pagination-button {
+    padding: 10px 20px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    color: #FF6600;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    font-size: 1em;
+}
+
+.pagination-button:hover:not(:disabled) {
+    background-color: #FF6600;
+    color: #fff;
+    border-color: #E65C00;
+}
+
+.pagination-button:disabled {
+    color: #aaa;
+    cursor: not-allowed;
+    background-color: #f9f9f9;
+}
+
+@media (max-width: 600px) {
+    .catalogo-title {
+        font-size: 2em;
+    }
+
+    .search-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-input {
+        max-width: none;
+    }
+
+    .pagination-button {
+        padding: 8px 15px;
+        font-size: 0.9em;
+    }
+
+    .pagination-controls {
+        gap: 10px;
+    }
+
+    .current-page-info {
+        font-size: 1em;
+    }
+}

@@ -1,0 +1,89 @@
+/* list-carta.component.css */
+
+.card-list-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  justify-content: center;
+  position: relative; /* In case child elements need to be positioned relative to this */
+}
+
+@media (max-width: 480px) {
+  .card-list-container {
+    grid-template-columns: minmax(200px, 1fr);
+  }
+}
+
+.carta-preview-wrapper {
+  cursor: pointer;
+
+  display: flex; /* Or inline-block, or block, depending on how app-preview-carta is structured */
+  justify-content: center; /* If app-preview-carta has a fixed width smaller than its column */
+  align-items: center;
+}
+
+.carta-preview-wrapper:focus {
+  outline: 2px solid #ff660000; /* Accessibility: focus indicator */
+  outline-offset: 2px;
+}
+
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.85); /* Slightly darker for more focus */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1050; /* High z-index to be on top */
+  padding: 20px; /* Padding around the modal content area */
+  box-sizing: border-box;
+  overflow-y: auto; /* Allows scrolling if content is too tall for viewport */
+}
+
+.modal-content {
+  position: relative; /* For positioning the close button */
+  background-color: transparent; /* display-carta will provide its own background */
+  padding: 0; /* display-carta will have its own padding */
+  border-radius: 12px; /* Optional: if display-carta doesn't have one or you want a consistent outer radius */
+  max-width: calc(100% - 40px); /* Ensure padding is respected */
+  max-height: calc(100vh - 40px); /* Ensure padding is respected and enable internal scroll for display-carta */
+  display: flex; /* To help center display-carta if it has margin: auto */
+  flex-direction: column;
+
+}
+
+.modal-close-button {
+  position: absolute;
+  top: -15px;
+  right: -15px;
+
+  background: #333;
+  color: white;
+  border: 2px solid white;
+
+  border-radius: 50%;
+
+  width: 36px;
+  height: 36px;
+
+  font-size: 24px;
+
+  line-height: 32px;
+
+  text-align: center;
+  cursor: pointer;
+  z-index: 1060;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+.modal-close-button:hover,
+.modal-close-button:focus {
+  background: #FF6600;
+  outline: none;
+}

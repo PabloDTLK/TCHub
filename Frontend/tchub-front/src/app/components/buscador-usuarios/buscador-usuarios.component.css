@@ -1,0 +1,175 @@
+.buscador-usuarios-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.page-header h1 {
+    font-size: 2.2em;
+    color: #333;
+}
+
+.search-form-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.search-input-usuarios {
+    flex-grow: 1;
+    padding: 10px 15px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.search-input-usuarios:focus {
+    outline: none;
+    border-color: #FF6600;
+    box-shadow: 0 0 0 2px rgba(255, 102, 0, 0.2);
+}
+
+.search-button-usuarios {
+    white-space: nowrap;
+}
+
+/* Reutiliza .loading-indicator, .alert, .btn de otros CSS o defínelos globalmente */
+.loading-indicator {
+    text-align: center;
+    padding: 20px;
+    color: #555;
+}
+
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+.alert-info {
+    color: #0c5460;
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+}
+
+.resultados-lista h2 {
+    font-size: 1.5em;
+    color: #444;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.lista-usuarios {
+    list-style: none;
+    padding: 0;
+}
+
+.usuario-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.15s ease;
+}
+
+.usuario-item:last-child {
+    border-bottom: none;
+}
+
+.usuario-item:hover .usuario-info {
+    /* Solo hover en la info para no interferir con botones */
+    background-color: #f8f9fa;
+}
+
+.usuario-item.inactivo .username,
+.usuario-item.inactivo .estado-usuario {
+    color: #999;
+    text-decoration: line-through;
+}
+
+.usuario-info {
+    flex-grow: 1;
+    cursor: pointer;
+    padding: 5px 0;
+    /* Para que el area clickeable sea mayor */
+}
+
+.username {
+    font-weight: 600;
+    color: #007bff;
+    /* Color de enlace */
+}
+
+.estado-usuario,
+.rol-usuario {
+    font-size: 0.85em;
+    color: #6c757d;
+    margin-left: 8px;
+}
+
+.admin-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+/* Reutiliza .btn, .btn-sm, etc., o copia/adapta los estilos */
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: white;
+}
+.btn-primary {
+    background-color: #FF6600;
+    color: white;
+}
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-warning {
+    background-color: #ffc107;
+    color: #212529;
+}
+
+.btn-warning:hover {
+    background-color: #e0a800;
+}
+
+.btn-info {
+    background-color: #17a2b8;
+    color: white;
+}
+
+.btn-info:hover {
+    background-color: #138496;
+}
+
+.btn-sm {
+    padding: 5px 10px;
+    font-size: 0.8em;
+}

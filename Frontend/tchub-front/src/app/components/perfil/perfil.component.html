@@ -1,0 +1,69 @@
+<div class="perfil-container">
+    <header class="perfil-header">
+        <h1>{{ pageTitle }}</h1>
+        <button *ngIf="mostrarBotonEditar" class="btn btn-primary" (click)="irAEditarColecciones()">
+            {{ esPerfilPropio ? 'Editar Mis Colecciones' : 'Gestionar Colecciones' }}
+        </button>
+    </header>
+
+    <div *ngIf="isLoading" class="loading-indicator">
+        <p>Cargando perfil y colecciones...</p>
+    </div>
+
+    <div *ngIf="error" class="alert alert-danger error-message">
+        <p>{{ error }}</p>
+    </div>
+
+    <div *ngIf="!isLoading && !error && coleccionesConValor.length === 0" class="no-items-message">
+        <p>Este usuario aún no tiene colecciones.</p>
+    </div>
+
+    <div *ngIf="!isLoading && !error && coleccionesConValor.length > 0" class="colecciones-lista">
+        <h2>Colecciones ({{ coleccionesConValor.length }})</h2>
+        <div *ngFor="let coleccion of coleccionesConValor" class="coleccion-item">
+            <div class="coleccion-item-header" (click)="toggleColeccion(coleccion)"
+                [attr.aria-expanded]="coleccion.estaDesplegada"
+                [attr.aria-controls]="'detalles-' + (coleccion.id || coleccion.nombre)" tabindex="0"
+                (keydown.enter)="toggleColeccion(coleccion)" (keydown.space)="toggleColeccion(coleccion)">
+                <span class="coleccion-nombre-lista">{{ coleccion.nombre }}</span>
+                <span class="valor-total">
+                    Valor Estimado: {{ (coleccion.valorTotalCalculado !== undefined ? (coleccion.valorTotalCalculado |
+                    currency:'EUR':'symbol':'1.2-2') : 'Calculando...') }}
+                </span>
+                <span class="desplegar-icono">
+                    {{ coleccion.estaDesplegada ? '▲' : '▼' }}
+                </span>
+            </div>
+
+            <!-- Detalles de la colección, se muestran si coleccion.estaDesplegada es true -->
+            <div class="coleccion-item-detalles" *ngIf="coleccion.estaDesplegada"
+                [id]="'detalles-' + (coleccion.id || coleccion.nombre)">
+                <p class="descripcion-detalle"><strong>Descripción:</strong> {{ coleccion.descripcion || 'Sin descripción.' }}</p>
+
+                <h4>Cartas en la Colección ({{ coleccion.variantes?.length || 0 }}):</h4>
+
+                <div *ngIf="!coleccion.variantes || coleccion.variantes.length === 0" class="no-cartas-en-coleccion">
+                    <p>Esta colección no tiene cartas añadidas.</p>
+                </div>
+
+                <ul *ngIf="coleccion.variantes && coleccion.variantes.length > 0" class="lista-cartas-coleccion">
+                    <!-- Itera sobre 'coleccion.variantes', que deben ser VarianteEnColeccion enriquecidas -->
+                    <li *ngFor="let variante of coleccion.variantes" class="carta-item-coleccion">
+                        <img [src]="variante.imagenCarta || 'assets/images/placeholder-carta.png'"
+                            [alt]="variante.nombreCarta || 'Imagen de carta'" class="imagen-carta-pequena">
+                        <div class="info-carta-coleccion">
+                            <span class="nombre-carta-detalle">{{ variante.nombreCarta || 'Nombre no disponible'
+                                }}</span>
+                            <span class="idioma-carta-detalle"
+                                *ngIf="variante.idiomaCodigo && variante.idiomaCodigo !== 'ERR'">
+                                ({{ variante.idiomaCodigo }})
+                            </span>
+                            <!-- ¡AQUÍ ESTABA EL ERROR! Faltaba mostrar la cantidad -->
+                            <span class="cantidad-carta-detalle">Cantidad: x{{ variante.cantidad }}</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

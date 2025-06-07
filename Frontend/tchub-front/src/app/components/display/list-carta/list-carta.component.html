@@ -1,0 +1,28 @@
+<div class="card-list-container">
+    <!-- Cambiamos la variable del ngFor para evitar confusión con el Input 'cartas' si hubiera colisión de nombres -->
+    <div *ngFor="let idCarta of cartas"
+        class="carta-preview-wrapper"
+        (click)="handleCartaClick(idCarta)"
+        tabindex="0"
+        (keydown.enter)="handleCartaClick(idCarta)"
+        (keydown.space)="handleCartaClick(idCarta)"
+        role="button"
+        [attr.aria-label]="(modoEditor ? 'Seleccionar carta ' : 'Ver detalles de carta ') + idCarta">
+        <app-preview-carta
+            [multiversalId]="idCarta"
+            [idiomaCodigo]="'ES'"/>
+    </div>
+
+    <div *ngIf="!modoEditor && isModalOpen" class="modal-overlay" (click)="closeCartaDetailModal()">
+        <div class="modal-content" (click)="$event.stopPropagation()">
+            <button class="modal-close-button" (click)="closeCartaDetailModal()" aria-label="Cerrar detalle">
+                X
+            </button>
+            <app-display-carta
+                *ngIf="selectedCartaIdForModal"
+                [multiversalId]="selectedCartaIdForModal"
+                [idiomaCodigo]="'ES'">
+            </app-display-carta>
+        </div>
+    </div>
+</div>

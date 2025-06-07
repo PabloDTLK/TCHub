@@ -1,0 +1,61 @@
+<div class="product-card-container" *ngIf="edicionDetalle || variante">
+    <div class="language-selector-container" *ngIf="idiomasDisponibles && idiomasDisponibles.length > 1">
+        <label for="language-select-{{multiversalId}}">Idioma:</label>
+        <select id="language-select-{{multiversalId}}"
+                [(ngModel)]="idiomaCodigo"
+                (ngModelChange)="onIdiomaChange($event)"
+                aria-label="Seleccionar idioma">
+            <option *ngFor="let lang of idiomasDisponibles" [value]="lang">
+                {{ idiomasNombres[lang] }}
+            </option>
+        </select>
+    </div>
+
+    <h2 class="product-name">{{ variante?.nombre || 'Cargando nombre...' }}</h2>
+    <div class="product-content">
+        <div class="image-section">
+            <div class="flip-card" (click)="voltear()" [class.is-flipped]="volteado">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <img *ngIf="variante?.imagen" [src]="variante.imagen" [alt]="'Imagen frontal de ' + variante?.nombre">
+                        <div class="image-placeholder-text" *ngIf="!variante?.imagen">IMAGEN NO DISPONIBLE</div>
+                    </div>
+                    <div class="flip-card-back">
+                        <img *ngIf="backImg" [src]="backImg" [alt]="'Imagen trasera de ' + variante?.nombre">
+                        <div class="image-placeholder-text" *ngIf="!backImg">INFO ADICIONAL NO DISPONIBLE</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-meta-info" *ngIf="edicionDetalle?.autor || edicionDetalle?.fechaLanzamiento">
+                <p>
+                    {{ edicionDetalle.autor }}
+                    <span *ngIf="edicionDetalle.autor && edicionDetalle.fechaLanzamiento"> - </span>
+                    {{ edicionDetalle.fechaLanzamiento | date:'dd/MM/yyyy' }}
+                </p>
+            </div>
+        </div>
+
+        <button class="flip-action-button" (click)="voltear(); $event.stopPropagation()" aria-label="Voltear tarjeta">
+            <span class="material-symbols-outlined">cached</span>
+        </button>
+
+        <div class="details-section">
+            <div class="description-container">
+                <h3>Descripción:</h3>
+                <p class="product-description">{{ variante?.descripcion || 'Descripción no disponible.' }}</p>
+            </div>
+            <p class="product-price">
+                <ng-container *ngIf="variante?.precioMedio !== null && variante?.precioMedio !== undefined; else noPrice">
+                    Precio: {{ variante?.precioMedio | currency:'EUR':'symbol':'1.2-2' }}
+                </ng-container>
+                <ng-template #noPrice>
+                    Precio no disponible
+                </ng-template>
+            </p>
+        </div>
+    </div>
+</div>
+<div *ngIf="!edicionDetalle && !variante" class="loading-error-container">
+    <p>Cargando datos de la carta...</p>
+</div>

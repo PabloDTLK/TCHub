@@ -1,0 +1,16 @@
+<!-- preview-carta.component.html -->
+<div class="card-container" #cardContainerRef>
+    <div class="card-image-section"
+    (mouseenter)="onImageMouseEnter()"
+    (mouseleave)="onImageMouseLeave()">
+        <img *ngIf="edicionPreview.varianteImagen" [src]="edicionPreview.varianteImagen"
+            [alt]="edicionPreview.nombre + ' cover'"
+            (error)="handleImageError()">
+    </div>
+    <div class="card-details-section">
+        <h3>{{ edicionPreview.nombre }}</h3>
+        <p><strong>Autor:</strong> {{ edicionPreview.autor }}</p>
+        <p> {{ edicionPreview.fechaLanzamiento | date:'dd/MM/yyyy' }}</p>
+        <p> {{ edicionPreview.precio | currency:'EUR':'symbol':'1.2-2' }} </p>
+    </div>
+</div>

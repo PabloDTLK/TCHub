@@ -1,0 +1,53 @@
+<div class="catalogo-container">
+    <h1 class="catalogo-title">Catálogo de Cartas</h1>
+
+    <div class="search-container">
+        <input type="text" placeholder="Buscar por nombre..." class="search-input" [(ngModel)]="searchTerm"
+            (ngModelChange)="onSearchTermChange($event)" (keyup.enter)="triggerManualSearch()"
+            aria-label="Buscar cartas por nombre" />
+        <button class="search-button" (click)="triggerManualSearch()" [disabled]="isLoading">
+            Buscar
+        </button>
+    </div>
+
+    <div *ngIf="!isLoading && !error && cartasIds.length > 0">
+        <app-list-carta [cartas]="cartasIds" [modoEditor]="modoSeleccionParaEditor"
+            (cartaSeleccionadaParaEditor)="onCartaSeleccionadaDeLista($event)">
+        </app-list-carta>
+    </div>
+
+    <div *ngIf="isLoading && cartasIds.length === 0" class="loading-indicator">
+        <p>Cargando cartas...</p>
+    </div>
+
+    <div *ngIf="error && !isLoading" class="error-message">
+        <p>{{ error }}</p>
+    </div>
+
+    <div *ngIf="!isLoading && !error && cartasIds.length === 0 && currentPage === 0" class="no-items-message">
+        <p>{{ (searchTerm.trim() || lastManuallyTriggeredSearchTerm) ? 'No se encontraron cartas para "' +
+            (searchTerm.trim() || lastManuallyTriggeredSearchTerm) + '".' : 'No hay cartas disponibles en el catálogo.'
+            }}</p>
+    </div>
+
+    <div *ngIf="cartasIds.length > 0">
+
+
+        <div class="pagination-controls">
+            <button class="pagination-button prev-button" (click)="previousPage()"
+                [disabled]="currentPage === 0 || isLoading" aria-label="Página anterior">
+                Anterior
+            </button>
+
+            <span class="current-page-info">Página {{ currentPage + 1 }}</span>
+
+            <button class="pagination-button next-button" (click)="nextPage()" [disabled]="!hasNextPage || isLoading"
+                aria-label="Página siguiente">
+                Siguiente
+            </button>
+        </div>
+        <div *ngIf="isLoading && cartasIds.length > 0" class="loading-indicator-inline">
+            Cargando más cartas...
+        </div>
+    </div>
+</div>

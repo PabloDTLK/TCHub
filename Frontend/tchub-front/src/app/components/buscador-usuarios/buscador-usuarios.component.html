@@ -1,0 +1,68 @@
+<div class="buscador-usuarios-container">
+    <header class="page-header">
+        <h1>Buscar Usuarios</h1>
+    </header>
+
+    <div class="search-form-container">
+        <input type="text" class="search-input-usuarios" placeholder="Nombre de usuario..."
+            [(ngModel)]="terminoBusqueda" (ngModelChange)="onInputBusqueda($event)" (keyup.enter)="buscar()"
+            aria-label="Buscar usuarios" />
+        <button class="btn btn-primary search-button-usuarios" (click)="buscar()" [disabled]="isLoading">
+            <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Buscar
+        </button>
+    </div>
+
+    <div *ngIf="isLoading" class="loading-indicator">
+        <p>Buscando usuarios...</p>
+    </div>
+
+    <div *ngIf="errorBusqueda" class="alert alert-danger error-message">
+        {{ errorBusqueda }}
+    </div>
+
+    <div *ngIf="mensajeInfo && !isLoading && resultadosBusqueda.length === 0" class="alert alert-info info-message">
+        {{ mensajeInfo }}
+    </div>
+
+    <div *ngIf="!isLoading && resultadosBusqueda.length > 0" class="resultados-lista">
+        <h2>Resultados ({{ resultadosBusqueda.length }})</h2>
+        <ul class="lista-usuarios">
+            <li *ngFor="let usuario of resultadosBusqueda" class="usuario-item"
+                [class.inactivo]="!usuario.activo && esAdmin">
+                <div class="usuario-info" (click)="verPerfil(usuario.username)" tabindex="0"
+                    (keydown.enter)="verPerfil(usuario.username)" role="link"
+                    [attr.aria-label]="'Ver perfil de ' + usuario.username">
+                    <span class="username">{{ usuario.username }}</span>
+                    <span class="estado-usuario" *ngIf="esAdmin">
+                        ({{ usuario.activo ? 'Activo' : 'Inactivo' }})
+                    </span>
+                    <span class="rol-usuario" *ngIf="esAdmin">
+                        - {{ usuario.isAdmin ? 'Admin' : 'Usuario' }}
+                    </span>
+                </div>
+
+                <div *ngIf="esAdmin" class="admin-actions">
+                    <button class="btn btn-sm btn-secondary" (click)="toggleActivo(usuario); $event.stopPropagation()"
+                        [disabled]="usuario.username === loggedInUsername"
+                        [attr.aria-label]="(usuario.activo ? 'Desactivar' : 'Activar') + ' a ' + usuario.username"
+                        title="{{ usuario.activo ? 'Desactivar' : 'Activar' }} usuario">
+                        {{ usuario.activo ? 'Desactivar' : 'Activar' }}
+                    </button>
+
+                    <button *ngIf="!usuario.isAdmin" class="btn btn-sm btn-warning"
+                        (click)="toggleAdmin(usuario); $event.stopPropagation()"
+                        [disabled]="usuario.username === loggedInUsername"
+                        [attr.aria-label]="'Hacer Administrador a ' + usuario.username" title="Hacer Administrador">
+                        Hacer Admin
+                    </button>
+                    <button *ngIf="usuario.isAdmin && usuario.username !== loggedInUsername" class="btn btn-sm btn-info"
+                        (click)="toggleAdmin(usuario); $event.stopPropagation()"
+                        [attr.aria-label]="'Quitar Admin a ' + usuario.username" title="Quitar Admin">
+                        Quitar Admin
+                    </button>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

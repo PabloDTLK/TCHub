@@ -1,0 +1,48 @@
+<header class="app-header">
+    <div class="header-content">
+        
+        <button
+        *ngIf="userIsLoggedIn"
+        class="menu-toggle"
+        (click)="toggleMenu(); $event.stopPropagation()"
+        aria-label="Abrir menú de navegación"
+        [attr.aria-expanded]="isMenuOpen">
+            <span class="material-symbols-outlined">
+                menu
+            </span>
+        </button>
+
+        <a routerLink="/" class="logo-link" (click)="closeMenu()" aria-label="Ir a la página principal">
+            <img [src]="logoPath" alt="Logo de la Empresa" class="logo-image">
+        </a>
+
+        <div class="header-actions">
+            
+        <a *ngIf="userIsLoggedIn"
+            routerLink="/perfil"
+            class="profile-link"
+            (click)="closeMenu()"
+            aria-label="Ir al perfil de usuario">
+            <span class="material-symbols-outlined">
+                person
+            </span>
+        </a>
+
+        <ng-container *ngIf="!userIsLoggedIn">
+            <a routerLink="/login" class="auth-button login-btn">Iniciar Sesión</a>
+            <a routerLink="/registro" class="auth-button register-btn">Registrarse</a>
+        </ng-container>
+        </div>
+    </div>
+
+    <nav *ngIf="userIsLoggedIn" class="dropdown-menu" [class.open]="isMenuOpen" (click)="$event.stopPropagation()">
+        <ul>
+        <li><a routerLink="/catalogo" (click)="closeMenu()">Catálogo</a></li>
+        <li><a routerLink="/mis-colecciones" (click)="closeMenu()">Mis Colecciones</a></li>
+        <li><a routerLink="/buscar-usuarios" (click)="closeMenu()">Buscador usuarios</a></li>
+        <li><a routerLink="/configuracion" (click)="closeMenu()">Configuración</a></li>
+        <li><hr class="menu-divider"></li>
+        <li><a (click)="handleLogout()" class="logout-link">Cerrar Sesión</a></li>
+        </ul>
+    </nav>
+</header>

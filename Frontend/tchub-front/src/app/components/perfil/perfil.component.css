@@ -1,0 +1,186 @@
+.perfil-container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.perfil-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.perfil-header h1 {
+    margin: 0;
+    font-size: 2.2em;
+    color: #333;
+}
+
+/* Reutiliza estilos de .btn, .loading-indicator, .alert de otros componentes si los tienes globales */
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: white;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+.btn-primary {
+    background-color: #FF6600;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #E65C00;
+}
+
+.loading-indicator,
+.no-items-message {
+    text-align: center;
+    padding: 40px 20px;
+    font-size: 1.2em;
+    color: #555;
+}
+
+.alert {
+    position: relative;
+    padding: .75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+}
+
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+.colecciones-lista h2 {
+    font-size: 1.8em;
+    color: #444;
+    margin-bottom: 20px;
+}
+
+.coleccion-item {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.coleccion-item-header {
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.coleccion-item-header:hover {
+    background-color: #f8f9fa;
+}
+
+.coleccion-nombre-lista {
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #0056b3;
+    /* Un color para destacar el nombre clickeable */
+}
+
+.valor-total {
+    font-size: 0.95em;
+    color: #28a745;
+    /* Verde para el valor */
+    font-weight: 500;
+}
+
+.desplegar-icono {
+    font-size: 1.2em;
+    color: #6c757d;
+}
+
+.coleccion-item-detalles {
+    padding: 20px;
+    border-top: 1px solid #eee;
+    background-color: #fdfdfd;
+    /* Un fondo ligeramente diferente para los detalles */
+}
+
+.descripcion-detalle {
+    font-size: 0.95em;
+    color: #555;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.coleccion-item-detalles h4 {
+    font-size: 1.1em;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.no-cartas-en-coleccion {
+    font-style: italic;
+    color: #777;
+}
+
+.lista-cartas-coleccion {
+    list-style: none;
+    padding: 0;
+}
+
+.carta-item-coleccion {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px 0;
+    border-bottom: 1px dashed #f0f0f0;
+}
+
+.carta-item-coleccion:last-child {
+    border-bottom: none;
+}
+
+.imagen-carta-pequena {
+    width: 50px;
+    /* Tamaño reducido para la lista */
+    height: auto;
+    aspect-ratio: 63/88;
+    object-fit: cover;
+    border-radius: 3px;
+    background-color: #e9ecef;
+}
+
+.info-carta-coleccion {
+    display: flex;
+    flex-direction: column;
+    /* O row si prefieres, ajusta gap */
+}
+
+.nombre-carta-detalle {
+    font-weight: 500;
+    color: #333;
+}
+
+.cantidad-carta-detalle,
+.idioma-carta-detalle {
+    font-size: 0.85em;
+    color: #666;
+}

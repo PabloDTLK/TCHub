@@ -1,0 +1,91 @@
+<div class="register-container">
+    <div class="register-card">
+        <h2 class="register-title">Crear Cuenta</h2>
+        <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)" novalidate>
+            
+        <div class="form-group">
+            <label for="regUsername">Nombre de Usuario:</label>
+            <input
+                type="text"
+                id="regUsername"
+                name="username"
+                class="form-control"
+                [(ngModel)]="registerData.username"
+                required
+                minlength="3"
+                pattern="^[a-zA-Z0-9_]+$"
+                #usernameField="ngModel"
+                [ngClass]="{ 'is-invalid': (registerForm.submitted || usernameField.touched) && (usernameField.invalid || backendError) }"
+                placeholder="Elige un nombre de usuario"
+            />
+            <div *ngIf="(registerForm.submitted || usernameField.touched) && usernameField.invalid" class="invalid-feedback">
+            <div *ngIf="usernameField.errors?.['required']">El nombre de usuario es obligatorio.</div>
+            <div *ngIf="usernameField.errors?.['minlength']">Debe tener al menos 3 caracteres.</div>
+            <div *ngIf="usernameField.errors?.['pattern']">Solo letras, números y guion bajo.</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="regPassword">Contraseña:</label>
+            <input
+                type="password"
+                id="regPassword"
+                name="password"
+                class="form-control"
+                [(ngModel)]="registerData.password"
+                required
+                #passwordField="ngModel"
+                [ngClass]="{ 'is-invalid': (registerForm.submitted || passwordField.touched) && (passwordField.invalid || backendError) }"
+                placeholder="Crea una contraseña segura"
+            />
+            <div *ngIf="(registerForm.submitted || passwordField.touched) && passwordField.invalid" class="invalid-feedback">
+            <div *ngIf="passwordField.errors?.['required']">La contraseña es obligatoria.</div>
+            <div *ngIf="passwordField.errors?.['minlength']">Debe tener al menos 8 caracteres.</div>
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <label for="regConfirmPassword">Confirmar Contraseña:</label>
+            <input
+            type="password"
+            id="regConfirmPassword"
+            name="confirmPassword"
+            class="form-control"
+            [(ngModel)]="registerData.confirmPassword"
+            required
+            #confirmPasswordField="ngModel"
+            [ngClass]="{ 'is-invalid': (registerForm.submitted || confirmPasswordField.touched) && (confirmPasswordField.invalid || confirmPasswordField.errors?.['passwordMismatch']) }"
+            placeholder="Vuelve a escribir la contraseña"
+            />
+            <div *ngIf="(registerForm.submitted || confirmPasswordField.touched) && confirmPasswordField.invalid" class="invalid-feedback">
+            <div *ngIf="confirmPasswordField.errors?.['required']">Confirmar la contraseña es obligatorio.</div>
+            </div>
+            <div *ngIf="confirmPasswordField.errors?.['passwordMismatch']" class="invalid-feedback">
+            Las contraseñas no coinciden.
+            </div>
+        </div>
+
+        <div *ngIf="registrationError && !backendError" class="alert alert-danger error-message">
+            {{ registrationError }}
+        </div>
+        <div *ngIf="registrationSuccess" class="alert alert-success success-message">
+            {{ registrationSuccess }}
+        </div>
+
+        <button
+            type="submit"
+            class="btn btn-primary register-button"
+            [disabled]="isLoading">
+            <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            <span *ngIf="isLoading"> Registrando...</span>
+            <span *ngIf="!isLoading">Registrarse</span>
+        </button>
+        </form>
+
+        <div class="register-links">
+        <span>¿Ya tienes una cuenta? </span>
+        <a routerLink="/login">Inicia Sesión</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,63 @@
+<div class="modal-overlay" (click)="cancelar()">
+    <div class="modal-content" (click)="stopPropagation($event)">
+        <header class="modal-header">
+            <h3>Añadir carta a la Colección</h3>
+            <button class="modal-close-button" (click)="cancelar()" aria-label="Cerrar modal">×</button>
+        </header>
+
+        <div class="modal-body">
+            <div *ngIf="isLoading" class="loading-indicator-modal">
+                <p>Cargando variantes...</p>
+            </div>
+
+            <div *ngIf="error && !isLoading" class="alert alert-danger error-message-modal">
+                {{ error }}
+            </div>
+
+            <div *ngIf="!isLoading && !error && variantesDisponibles.length > 0" class="form-seleccion">
+                <div class="form-group-modal">
+                    <label for="varianteIdioma">Selecciona el Idioma (Variante):</label>
+                    <select id="varianteIdioma" name="varianteIdioma" class="form-control-modal"
+                        [(ngModel)]="selectedVarianteUniversalId"
+                        required>
+                        <option *ngIf="variantesDisponibles.length === 0" [ngValue]="null" disabled>
+                            No hay variantes disponibles
+                        </option>
+                        <option *ngFor="let variante of variantesDisponibles" [value]="variante.universalId">
+                            {{ variante.idiomaCodigo }} - {{ variante.nombre }}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group-modal" *ngIf="selectedVarianteUniversalId">
+                    <label for="cantidadVariante">Cantidad:</label>
+                    <input type="number" id="cantidadVariante" name="cantidadVariante"
+                        class="form-control-modal cantidad-input-modal" [(ngModel)]="cantidadSeleccionada" min="1"
+                        required />
+                </div>
+
+                <!-- Opcional: Mostrar una preview de la imagen de la variante seleccionada -->
+                <div *ngIf="selectedVarianteUniversalId" class="variante-preview">
+                    <ng-container *ngFor="let v of variantesDisponibles">
+                        <img *ngIf="v.universalId === selectedVarianteUniversalId && v.imagen" [src]="v.imagen"
+                            [alt]="'Imagen de ' + v.nombre" class="preview-imagen-modal">
+                    </ng-container>
+                </div>
+
+            </div>
+
+            <div *ngIf="!isLoading && !error && variantesDisponibles.length === 0 && !this.error"
+                class="no-variantes-message">
+                <p>No se encontraron variantes de idioma para esta carta.</p>
+            </div>
+        </div>
+
+        <footer class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="cancelar()">Cancelar</button>
+            <button type="button" class="btn btn-primary" (click)="confirmarSeleccion()"
+                [disabled]="isLoading || !selectedVarianteUniversalId || cantidadSeleccionada <= 0">
+                Añadir a Colección
+            </button>
+        </footer>
+    </div>
+</div>
