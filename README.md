@@ -23,12 +23,10 @@ Verifica con: java -version y mvn -version
 
 Pasos de Instalación del Frontend (Angular):
 
-1. Clonar el Repositorio (si aplica):
-Si el código está en un repositorio Git:
+1. Clonar el Repositorio:
+**git clone https://github.com/PabloDTLK/TCHub.git**
 
-git clone https://github.com/PabloDTLK/TCHub.git
-
-cd TCHub
+**cd TCHub**
 
 Si ya tienes los archivos del proyecto, navega a la carpeta raíz del proyecto en tu terminal.
 
@@ -36,9 +34,9 @@ Si ya tienes los archivos del proyecto, navega a la carpeta raíz del proyecto e
 2. Instalar Dependencias:
 Desde la carpeta raíz del frontend, ejecuta el siguiente comando para instalar todas las librerías necesarias definidas en package.json:
 
-npm install
+**npm install**
 
-npm install jwt-decode
+**npm install jwt-decode**
 
 3. Configurar el Entorno (Conexión con el Backend):
 Asegúrate de que la propiedad baseUrl en src/environments/environment.ts apunte a la URL correcta del backend:
@@ -52,7 +50,7 @@ export const environment = {
 4. Ejecutar la Aplicación en Modo Desarrollo:
 Una vez completados los pasos anteriores, puedes iniciar el servidor de desarrollo de Angular:
 
-ng serve -o
+**ng serve -o**
 
 ---
 
@@ -61,13 +59,13 @@ Pasos de Instalación del Backend (Spring Boot):
 1. Ubícate en la Carpeta del Backend:
 En una terminal nueva, navega hasta la carpeta donde se encuentra el proyecto de Spring Boot
 
-cd backend
+**cd backend**
 
 
 2. Construir y Ejecutar la Aplicación:
 Utiliza Maven para compilar y ejecutar el backend:
 
-mvn spring-boot:run
+**mvn spring-boot:run**
 
 Esto iniciará el servidor backend en http://localhost:8080 (puerto por defecto).
 
@@ -75,7 +73,7 @@ Esto iniciará el servidor backend en http://localhost:8080 (puerto por defecto)
 3. Verifica que el Backend esté Funcionando:
 Puedes abrir en el navegador o usar herramientas como Postman para acceder a:
 
-http://localhost:8080/api
+http://localhost:8080/tchub
 
 
 
